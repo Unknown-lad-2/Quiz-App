@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <link rel="stylesheet" href="./style.css">
+    <title>Quiz-App_v1.0</title>
+</head>
+<body>
+    <div class="startButton" id="startBtn"><button>Start Quiz</button></div>
+
+    <div class="container" id="container">
+        <div class="conTitle">
+            <span>The Rules are mentioned below:-</span>
+        </div>
+        <div class="conList">
+            <div class="con">1. Yout will have only <span>10 seconds</span> for each Questions</div>
+            <div class="con">2. Once you select your answer you can't retrive it</div>
+            <div class="con">3. You can't select any options after <span>10 seconds</span></div>
+            <div class="con">4. You can't exit from the Quiz once you started</div>
+            <div class="con">5. Your points will be given on the basic of correct asnwers</div>
+        </div>
+        <div class="btns">
+            <button class="exit" id="exit">Exit Quiz</button>
+            <button class="restart" id="continue">Continue</button>
+        </div>
+    </div>
+
+    <div class="quizGame">
+        <header>
+            <div class="title">Quizonic App</div>
+            <div class="timer">
+                <div class="timeText">Time Left</div>
+                <div class="timeSecs">10</div>
+            </div>
+            <div class="timeLine"></div>
+        </header>
+        <section>
+            <div class="quizText">
+                <!-- <span>Who won Copa De ral 2021 Cup?</span> -->
+            </div>
+            <div class="optionList">
+                <!-- <div class="option">
+                    <span>India</span>
+                    <div class="icons tick"><i class="fas fa-check"></i></div>
+                </div>
+                <div class="option">
+                    <span>Souvik Acharya</span>
+                    <div class="icons cross"><i class="fas fa-times"></i></div>
+                </div>
+                <div class="option">
+                    <span>Argentina</span>
+                    <div class="icons"><i class="fas fa-times"></i></div>
+                </div>
+                <div class="option">
+                    <span>Coloumbia</span>
+                    <div class="icons"><i class="fas fa-times"></i></div>
+                </div> -->
+            </div>
+        </section>
+        <footer>
+            <div class="totalQuestions">
+                <!-- <span><p>2</p>/<p>5</p></span> -->
+            </div>
+        <button class="btnNext">Next Ques</button>
+    </footer>
+    </div>
+
+    <div class="result">
+        <div class="icon">
+            <i class="fas fa-crown"></i>
+        </div>
+        <div class="completed">You have completed the Quiz!</div>
+        <div class="scores">
+            <span>You got <p id="quesCount">4</p> out of <p id="totalQues">10</p> points</span>
+        </div>
+        <div class="btns">
+            <button class="restart">Replay Quiz</button>
+            <button class="exit">Quit Quiz</button>
+        </div>
+    </div>
+
+    <script src="./js/script.js"></script>
+    <script src="./js/questonSet.js"></script>
+</body>
+</html>
