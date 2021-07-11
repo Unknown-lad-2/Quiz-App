@@ -26,7 +26,8 @@ body{
                 0 6px 20px 0 rgba(0,0,0,.20);
 }
 .container.activation,
-.quizGame.activateQuiz {
+.quizGame.activateQuiz,
+.result.activateResult {
     z-index: 5;
     opacity: 1;
     pointer-events: all;

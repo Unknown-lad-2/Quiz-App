@@ -6,6 +6,7 @@ const quizSection = document.querySelector(".quizGame");
 const optionList = document.querySelector(".optionList");
 const timeCount = document.querySelector(".timer .timeSecs");
 const timeLine = document.querySelector("header .timeLine");
+const timesUp = document.querySelector(".timer .timeText");
 
 //start quiz
 startBtn.addEventListener("click",()=>{
@@ -29,13 +30,39 @@ start.onclick= ()=>{
 
 let count = 0;
 let quesNum = 1;
-let tickIcon = `<div class="icons tick"><i class="fa fa-check" aria-hidden="true"></i></div>`;
-let crossIcon = `<div class="icons cross"><i class="fa fa-times" aria-hidden="true"></i></div>`;
 let counter, counterLine;
 let timeVal = 10;
 let withVal = 0;
+let userCount = 0;
 
 const nextBtn = document.querySelector(".btnNext");
+const result = document.querySelector(".result");
+const restartQuiz = document.getElementById("reset");
+const exitQuiz = document.getElementById("quit");
+
+restartQuiz.addEventListener("click", () => {
+    quizSection.classList.add("activateQuiz");
+    result.classList.remove("activateResult");
+    let count = 0;
+    let quesNum = 1;
+    let counter, counterLine;
+    let timeVal = 10;
+    let withVal = 0;
+    let userCount = 0;
+    showQuestion(count);
+    counterBtn(quesNum);
+    clearInterval(counter);
+    startTimer(timeVal);
+    startTimeLine(0);
+    clearInterval(counterLine);
+    startTimeLine(withVal);
+    nextBtn.style.display = "none";
+    timesUp.textContent = "Times left"
+})
+
+exitQuiz.addEventListener("click",()=>{
+    window.location.reload();
+})
 
 nextBtn.addEventListener("click",()=>{
     if(count < questions.length -1){
@@ -45,11 +72,14 @@ nextBtn.addEventListener("click",()=>{
         counterBtn(quesNum);
         clearInterval(counter);
         startTimer(timeVal);
-        startTimeLine(0);
         clearInterval(counterLine);
         startTimeLine(withVal);
         nextBtn.style.display = "none";
+        timesUp.textContent = "Times left"
     }else{
+        clearInterval(counter);
+        clearInterval(counterLine);
+        showResult();
         console.log("Questions Covered");
     }
     
@@ -79,6 +109,9 @@ function counterBtn(index) {
     countBtn.innerHTML = totalQuestionTag;
 }
 
+let tickIcon = `<div class="icons tick"><i class="fa fa-check" aria-hidden="true"></i></div>`;
+let crossIcon = `<div class="icons cross"><i class="fa fa-times" aria-hidden="true"></i></div>`;
+
 //select correct and incorrect options
 function optionSelected(answer){
     clearInterval(counter);
@@ -86,8 +119,9 @@ function optionSelected(answer){
     let usrAns = answer.textContent;
     let corrAns = questions[count].answer;
     let allOptions = optionList.children.length;
-
+    
     if(usrAns === corrAns){
+        userCount += 2;
         answer.classList.add('correct');
         answer.insertAdjacentHTML('beforeend',tickIcon);
     }else{
@@ -109,6 +143,26 @@ function optionSelected(answer){
     nextBtn.style.display = "block";
 }
 
+function showResult(){
+    quizBody.classList.remove('activation');
+    quizSection.classList.remove('activateQuiz')
+    result.classList.add('activateResult')  //show result
+
+    const scoreText = result.querySelector(".scores");
+    if(userCount > 7){
+        let scoeTag = `<span>Congrats!, You got <p>${userCount}</p> out of <p>${(questions.length) * 2}</p> points</span>`
+        scoreText.innerHTML=scoeTag;
+    }
+    else if (userCount > 4) {
+        let scoeTag = `<span>Nice, You got <p>${userCount}</p> out of <p>${(questions.length) * 2}</p> points</span>`
+        scoreText.innerHTML = scoeTag;
+    }
+    else{
+        let scoeTag = `<span>Sorry! You got <p>${userCount}</p> out of <p>${(questions.length) * 2}</p> points</span>`
+        scoreText.innerHTML = scoeTag;
+    }
+}
+
 function startTimer(time){
     counter = setInterval(timer,1000);
     function timer(){
@@ -121,6 +175,22 @@ function startTimer(time){
         if(time < 0){
             clearInterval(counter);
             timeCount.textContent = '00';
+            timesUp.textContent="Times Up"
+
+            let corrAns = questions[count].answer;
+            let allOptions = optionList.children.length;
+            
+            for (let i = 0; i < allOptions; i++) {
+                if (optionList.children[i].textContent == corrAns) {
+                    optionList.children[i].setAttribute("class", "option correct");
+                    optionList.children[i].insertAdjacentHTML('beforeend', tickIcon);
+                }
+            }
+
+            for (let i = 0; i < allOptions; i++) {
+                optionList.children[i].classList.add('disable')
+            }
+            nextBtn.style.display = "block";
         }
     }
 }
